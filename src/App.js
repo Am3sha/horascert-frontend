@@ -74,6 +74,7 @@ function AppContent() {
 
     initAuth();
 
+    // Re-verify auth every 10 minutes (keeps session fresh)
     intervalId = window.setInterval(() => {
       initAuth();
     }, 10 * 60 * 1000);

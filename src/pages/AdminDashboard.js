@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { adminLogout, verifyAuth } from '../services/api';
+import { adminLogout } from '../services/api';
 import ApplicationsTab from './admin/ApplicationsTab';
 import EmailsTab from './admin/EmailsTab';
 import CertificatesTab from './admin/CertificatesTab';
@@ -11,34 +11,14 @@ const AdminDashboard = () => {
     const [activeTab, setActiveTab] = useState('certificates');
     const [error, setError] = useState('');
 
-    useEffect(() => {
-        let active = true;
-
-        const check = async () => {
-            try {
-                const res = await verifyAuth();
-                if (active && (!res || !res.success)) {
-                    navigate('/login');
-                }
-            } catch {
-                if (active) {
-                    navigate('/login');
-                }
-            }
-        };
-
-        check();
-
-        return () => {
-            active = false;
-        };
-    }, [navigate]);
+    // No auth check here - App.js already protects this route
+    // App.js redirects to /login if not authenticated before rendering AdminDashboard
 
     const handleLogout = async () => {
         try {
             await adminLogout();
         } finally {
-            navigate('/login');
+            navigate('/login', { replace: true });
         }
     };
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { adminLogin } from '../services/api';
+import { adminLogin, verifyAuth } from '../services/api';
 import './Login.css';
 
 /**
@@ -14,6 +14,23 @@ export default function Login() {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+
+    // Check if already authenticated - redirect to dashboard
+    useEffect(() => {
+        const checkAuth = async () => {
+            try {
+                const res = await verifyAuth();
+                if (res && res.success) {
+                    // Already logged in, redirect to dashboard
+                    navigate('/dashboard', { replace: true });
+                }
+            } catch {
+                // Not logged in, stay on login page
+            }
+        };
+
+        checkAuth();
+    }, [navigate]);
 
     // Auto-hide error after 4 seconds
     useEffect(() => {
