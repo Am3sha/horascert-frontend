@@ -4,6 +4,10 @@ export const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:5001'
 export const API_PREFIX = String(API_BASE).replace(/\/$/, '').endsWith('/api/v1') ? '' : '/api/v1';
 export const toApiUrl = (path) => `${API_BASE}${API_PREFIX}${path}`;
 
+// ========================================================================
+// PROTECTED INSTANCE: For authenticated admin endpoints
+// Includes auth token, handles 401 by redirecting to login
+// ========================================================================
 const instance = axios.create({
     baseURL: API_BASE,
     headers: { 'Content-Type': 'application/json' },
@@ -11,7 +15,7 @@ const instance = axios.create({
     timeout: 60000, // 60 seconds - sufficient for async processing (was 30000)
 });
 
-// Add Authorization header from localStorage for all requests
+// Add Authorization header from localStorage for authenticated requests
 // This acts as fallback if cookies are not sent
 instance.interceptors.request.use((config) => {
     const token = localStorage.getItem('token');
@@ -28,6 +32,8 @@ instance.interceptors.request.use((config) => {
     return Promise.reject(error);
 });
 
+// Handle 401/403 for protected endpoints ONLY
+// Redirect to login only when accessing admin endpoints (not public routes)
 instance.interceptors.response.use(
     (res) => res,
     (err) => {
@@ -37,14 +43,46 @@ instance.interceptors.response.use(
             localStorage.removeItem('token');
             if (typeof window !== 'undefined') {
                 const path = window.location && window.location.pathname;
-                if (path !== '/login') {
+                // ONLY redirect to login for admin/protected routes
+                // Don't redirect for public routes like /certificate, /application, /contact
+                const isProtectedRoute = path && (
+                    path === '/dashboard' ||
+                    path.startsWith('/admin/') ||
+                    path === '/login'
+                );
+                if (isProtectedRoute && path !== '/login') {
                     window.location.replace('/login');
                 }
+                // If public route, just reject the error and let component handle it
             }
         }
         return Promise.reject(err);
     }
 );
+
+// ========================================================================
+// PUBLIC INSTANCE: For public endpoints (certificates, applications, etc)
+// NO auth interceptor, NO redirect on 401
+// Allows public access without requiring authentication
+// ========================================================================
+const publicInstance = axios.create({
+    baseURL: API_BASE,
+    headers: { 'Content-Type': 'application/json' },
+    withCredentials: true,
+    timeout: 60000,
+});
+
+// Public instance: no auth interceptor, no redirect logic
+// Let errors be handled by the component or handler function
+publicInstance.interceptors.response.use(
+    (res) => res,
+    (err) => {
+        // Public endpoints don't redirect to login on error
+        // Errors are returned to calling function for handling
+        return Promise.reject(err);
+    }
+);
+
 
 async function handle(req) {
     try {
@@ -87,7 +125,7 @@ export async function updateEmailStatus(id, status) {
 }
 
 export async function fetchCertificates(params = {}) {
-    return handle(instance.get(`${API_PREFIX}/certificates`, { params }));
+    return handle(publicInstance.get(`${API_PREFIX}/certificates`, { params }));
 }
 
 export async function createCertificate(payload) {
@@ -128,18 +166,22 @@ export async function createCertificate(payload) {
     }
 }
 
+// PUBLIC: Fetch certificate by ID (no auth required)
+// Uses publicInstance to prevent auth redirect on 401
 export async function fetchCertificateById(certificateId) {
-    return handle(instance.get(`${API_PREFIX}/certificates/certificateId/${certificateId}`));
+    return handle(publicInstance.get(`${API_PREFIX}/certificates/certificateId/${certificateId}`));
 }
 
+// PUBLIC: Fetch certificate by number (no auth required)
+// Uses publicInstance to prevent auth redirect on 401
 export async function fetchCertificateByNumber(certificateNumber) {
     const encoded = encodeURIComponent((certificateNumber || '').trim());
-    return handle(instance.get(`${API_PREFIX}/certificates/${encoded}`));
+    return handle(publicInstance.get(`${API_PREFIX}/certificates/${encoded}`));
 }
 
 export async function fetchCertificateQrBlob(certificateId) {
     const encoded = encodeURIComponent((certificateId || '').trim());
-    const res = await instance.get(`${API_PREFIX}/certificates/${encoded}/qr`, {
+    const res = await publicInstance.get(`${API_PREFIX}/certificates/${encoded}/qr`, {
         responseType: 'blob'
     });
     return res.data;
@@ -203,15 +245,15 @@ export async function verifyAuth() {
 export async function submitApplication(payload) {
     const isFormData = typeof FormData !== 'undefined' && payload instanceof FormData;
     if (isFormData) {
-        return handle(instance.post(`${API_PREFIX}/applications`, payload, {
+        return handle(publicInstance.post(`${API_PREFIX}/applications`, payload, {
             headers: { 'Content-Type': 'multipart/form-data' }
         }));
     }
-    return handle(instance.post(`${API_PREFIX}/applications`, payload));
+    return handle(publicInstance.post(`${API_PREFIX}/applications`, payload));
 }
 
 export async function submitContactEmail(payload) {
-    return handle(instance.post(`${API_PREFIX}/emails`, payload));
+    return handle(publicInstance.post(`${API_PREFIX}/emails`, payload));
 }
 
 export default {
