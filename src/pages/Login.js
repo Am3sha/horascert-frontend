@@ -45,9 +45,9 @@ export default function Login() {
                 }
 
                 // Login successful, cookie is set by backend
-                // Navigate immediately to dashboard (no refresh, replace history entry)
-                // App.js mounted with single auth check - session already verified
-                navigate('/dashboard', { replace: true });
+                // Reload page to let App.js verify the new token
+                // This ensures isAdmin state is updated before navigating
+                window.location.href = '/dashboard';
             } else {
                 // Friendly error message
                 setError('Invalid email or password. Please try again.');

@@ -17,8 +17,11 @@ const AdminDashboard = () => {
     const handleLogout = async () => {
         try {
             await adminLogout();
+            // Wait 500ms to ensure logout request reaches backend
+            await new Promise(resolve => setTimeout(resolve, 500));
         } finally {
-            navigate('/login', { replace: true });
+            // Reload page to clear auth state
+            window.location.href = '/login';
         }
     };
 
