@@ -32,8 +32,9 @@ instance.interceptors.request.use((config) => {
     return Promise.reject(error);
 });
 
-// Handle 401/403 for protected endpoints ONLY
-// Redirect to login only when accessing admin endpoints (not public routes)
+// ❌ NO REDIRECT IN INTERCEPTOR
+// Axios only handles network requests, not routing
+// Routing is handled by App.js only
 instance.interceptors.response.use(
     (res) => res,
     (err) => {
@@ -41,20 +42,8 @@ instance.interceptors.response.use(
         if (status === 401 || status === 403) {
             // Clear token from localStorage on auth failure
             localStorage.removeItem('token');
-            if (typeof window !== 'undefined') {
-                const path = window.location && window.location.pathname;
-                // ONLY redirect to login for admin/protected routes
-                // Don't redirect for public routes like /certificate, /application, /contact
-                const isProtectedRoute = path && (
-                    path === '/dashboard' ||
-                    path.startsWith('/admin/') ||
-                    path === '/login'
-                );
-                if (isProtectedRoute && path !== '/login') {
-                    window.location.replace('/login');
-                }
-                // If public route, just reject the error and let component handle it
-            }
+            // ❌ NO window.location.replace() here
+            // Let App.js handle routing based on auth state
         }
         return Promise.reject(err);
     }
