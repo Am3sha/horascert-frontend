@@ -8,7 +8,7 @@ const instance = axios.create({
     baseURL: API_BASE,
     headers: { 'Content-Type': 'application/json' },
     withCredentials: true, // CRITICAL: Send cookies in cross-domain requests
-    timeout: 30000
+    timeout: 60000, // 60 seconds - sufficient for async processing (was 30000)
 });
 
 // Add Authorization header from localStorage for all requests
@@ -92,12 +92,40 @@ export async function fetchCertificates(params = {}) {
 
 export async function createCertificate(payload) {
     const isFormData = typeof FormData !== 'undefined' && payload instanceof FormData;
-    if (isFormData) {
-        return handle(instance.post(`${API_PREFIX}/certificates`, payload, {
-            headers: { 'Content-Type': 'multipart/form-data' }
-        }));
+
+    try {
+        let response;
+        if (isFormData) {
+            response = await instance.post(`${API_PREFIX}/certificates`, payload, {
+                headers: { 'Content-Type': 'multipart/form-data' },
+                timeout: 60000 // Explicit timeout for this operation
+            });
+        } else {
+            response = await instance.post(`${API_PREFIX}/certificates`, payload, {
+                timeout: 60000
+            });
+        }
+
+        // Handle both 201 (Created) and 202 (Accepted - async processing)
+        if (response && response.status && (response.status === 201 || response.status === 202)) {
+            return {
+                success: true,
+                ...response.data
+            };
+        }
+
+        return handle(response);
+    } catch (err) {
+        // Log timeout errors specifically
+        if (err.code === 'ECONNABORTED') {
+            return {
+                success: false,
+                error: 'Timeout',
+                message: 'Certificate creation is taking longer than expected. Please try again.'
+            };
+        }
+        return handle(err);
     }
-    return handle(instance.post(`${API_PREFIX}/certificates`, payload));
 }
 
 export async function fetchCertificateById(certificateId) {
