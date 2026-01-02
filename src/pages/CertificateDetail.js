@@ -3,9 +3,6 @@ import { useParams } from 'react-router-dom';
 import { QRCodeSVG } from 'qrcode.react';
 import api from '../services/api';
 
-const API_BASE = process.env.REACT_APP_API_URL || '';
-const API_PREFIX = String(API_BASE).replace(/\/$/, '').endsWith('/api/v1') ? '' : '/api/v1';
-
 export default function CertificateDetail() {
     const { certificateNumber } = useParams();
     const [cert, setCert] = useState(null);
