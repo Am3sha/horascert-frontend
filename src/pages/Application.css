@@ -11,6 +11,253 @@
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
+.progress {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.progress-text {
+  font-weight: 700;
+  color: var(--primary-navy);
+}
+
+.progress-steps {
+  display: flex;
+  gap: 10px;
+}
+
+.form-step {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card {
+  padding: 18px;
+  border: 1px solid #e6e6e6;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.section-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--primary-navy);
+  margin-bottom: 12px;
+}
+
+.form-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.form-grid.two {
+  grid-template-columns: 1fr 1fr;
+}
+
+.form-grid.three {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.form-grid.four {
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.address-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.form-error {
+  color: #e74c3c;
+  font-size: 0.875rem;
+  margin-top: 6px;
+}
+
+.form-error-summary {
+  padding: 12px 14px;
+  background: #fff5f5;
+  border: 1px solid #f1b0b0;
+  color: #a82828;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.checkbox-card,
+.radio-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid #e6e6e6;
+  border-radius: 10px;
+  background: #fafafa;
+  cursor: pointer;
+}
+
+.radio-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.dropzone {
+  position: relative;
+  border: 2px dashed #cfd7e6;
+  border-radius: 12px;
+  padding: 18px;
+  background: #fbfcff;
+}
+
+.dropzone.active {
+  border-color: var(--primary-blue);
+  background: #f3f7ff;
+}
+
+.dropzone-title {
+  font-weight: 800;
+  color: var(--primary-navy);
+  margin-bottom: 6px;
+}
+
+.dropzone-subtitle {
+  color: #57657a;
+  font-size: 0.95rem;
+}
+
+.dropzone-input {
+  margin-top: 12px;
+}
+
+.file-list {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.file-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid #ececec;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.file-meta {
+  font-size: 0.95rem;
+  color: var(--text-dark);
+  word-break: break-word;
+}
+
+.file-remove {
+  border: none;
+  background: #fee;
+  color: #a82828;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.collapsible {
+  border: 1px solid #e6e6e6;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 12px;
+}
+
+.collapsible-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  background: #f8fafc;
+  border: none;
+  cursor: pointer;
+  font-weight: 800;
+  color: var(--primary-navy);
+}
+
+.collapsible-body {
+  padding: 14px;
+  background: #fff;
+}
+
+.toggle-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.toggle-btn {
+  border: 1px solid #d6d6d6;
+  background: #fff;
+  border-radius: 10px;
+  padding: 10px 12px;
+  cursor: pointer;
+  font-weight: 800;
+  min-width: 72px;
+}
+
+.toggle-btn.active {
+  border-color: var(--primary-blue);
+  background: #f2f7ff;
+}
+
+.steps {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.step-item {
+  border: 2px solid #e0e0e0;
+  background: #fff;
+  border-radius: 6px;
+  padding: 10px 12px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.step-item.active {
+  border-color: var(--primary-blue);
+}
+
+.step-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.review-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.review-item {
+  font-size: 14px;
+  color: var(--text-dark);
+}
+
 .form-section {
   margin-bottom: 48px;
   padding-bottom: 48px;
@@ -146,6 +393,20 @@
     padding: 32px 24px;
   }
 
+  .progress {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .form-grid.two,
+  .form-grid.three,
+  .form-grid.four,
+  .address-grid,
+  .checkbox-grid,
+  .radio-grid {
+    grid-template-columns: 1fr;
+  }
+
   .form-row {
     grid-template-columns: 1fr;
   }
@@ -157,6 +418,10 @@
   .form-section {
     margin-bottom: 32px;
     padding-bottom: 32px;
+  }
+
+  .step-actions {
+    justify-content: stretch;
   }
 }
 

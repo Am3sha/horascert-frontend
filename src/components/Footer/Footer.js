@@ -17,7 +17,6 @@ const Footer = () => {
     { path: '/about', label: 'About Us' },
     { path: '/services', label: 'Our Services' },
     { path: '/clients', label: 'Clients' },
-    { path: '/certificate-validation', label: 'Verify Certificate' },
     { path: '/application', label: 'Apply Now' },
     { path: '/contact', label: 'Contact Us' }
   ];
@@ -128,7 +127,7 @@ const Footer = () => {
                   <rect x="2.5" y="4.16667" width="15" height="11.6667" rx="2" stroke="currentColor" strokeWidth="1.5" />
                 </svg>
                 <span className="contact-text">
-                  <a href="mailto:info@horas-cert.com">info@horas-cert.com</a>
+                  <a href="mailto:info@horas-cert.com">info@horascert.com</a>
                 </span>
               </div>
             </div>

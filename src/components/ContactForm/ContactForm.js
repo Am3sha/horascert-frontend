@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { sanitizeInput, sanitizeAndValidateForm } from '../../utils/security';
+import { submitContactEmail } from '../../services/api';
 import './ContactForm.css';
 
 const ContactForm = () => {
@@ -13,14 +13,73 @@ const ContactForm = () => {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  // Numeric validation helper
+  const isNumericOnly = (value) => /^[0-9+\-\s()]*$/.test(value);
+
+  // Sanitize and validate form data
+  const sanitizeAndValidateForm = (formData, validationRules) => {
+    const sanitized = {};
+    const errors = {};
+
+    // Sanitize and validate each field
+    Object.keys(validationRules).forEach(field => {
+      const value = formData[field]?.trim() || '';
+      const rules = validationRules[field];
+
+      sanitized[field] = value;
+
+      // Required validation
+      if (rules.required && !value) {
+        errors[field] = rules.requiredMessage || `${field} is required`;
+      }
+
+      // Email validation
+      if (rules.email && value && !value.includes('@')) {
+        errors[field] = rules.emailMessage || 'Please enter a valid email address';
+      }
+
+      // Min length validation
+      if (rules.minLength && value.length < rules.minLength) {
+        errors[field] = `${field} must be at least ${rules.minLength} characters`;
+      }
+
+      // Max length validation
+      if (rules.maxLength && value.length > rules.maxLength) {
+        errors[field] = `${field} must not exceed ${rules.maxLength} characters`;
+      }
+    });
+
+    return { sanitized, errors };
+  };
+
+  // Sanitize data for submission
+  const sanitizeForSubmission = (value) => {
+    if (typeof value !== 'string') return value;
+    return value.trim().replace(/[<>]/g, '');
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    // Sanitize input on change
-    const sanitizedValue = sanitizeInput(value);
+
+    // Phone field: allow only numeric characters, +, -, spaces, and parentheses
+    if (name === 'phone' && !isNumericOnly(value)) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: 'Phone number can only contain digits, +, -, spaces, and parentheses'
+      }));
+      return;
+    }
+
+    // Enforce max length for message field
+    if (name === 'message' && value.length > 2000) {
+      return; // Prevent setting value beyond max length
+    }
+
     setFormData(prev => ({
       ...prev,
-      [name]: sanitizedValue
+      [name]: value
     }));
     // Clear error when user starts typing
     if (errors[name]) {
@@ -65,7 +124,8 @@ const ContactForm = () => {
       }
     };
 
-    const { errors: validationErrors } = sanitizeAndValidateForm(formData, validationRules);
+    const { sanitized, errors: validationErrors } = sanitizeAndValidateForm(formData, validationRules);
+    setFormData(sanitized);
     setErrors(validationErrors);
     return Object.keys(validationErrors).length === 0;
   };
@@ -80,49 +140,58 @@ const ContactForm = () => {
     setIsSubmitting(true);
     setSubmitStatus(null);
 
-    // Sanitize all form data before submission
-    const sanitizedData = {
-      name: sanitizeInput(formData.name),
-      email: sanitizeInput(formData.email),
-      phone: sanitizeInput(formData.phone),
-      subject: sanitizeInput(formData.subject),
-      message: sanitizeInput(formData.message)
-    };
-
     try {
-      const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
-      const response = await fetch(`${API_URL}/api/applications/contact`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(sanitizedData),
-      });
+      // Check if backend is enabled via environment variable
+      const backendEnabled = process.env.REACT_APP_BACKEND_ENABLED === "true";
 
-      const data = await response.json();
+      // Prepare sanitized data
+      const sanitizedData = {
+        name: sanitizeForSubmission(formData.name),
+        email: sanitizeForSubmission(formData.email),
+        phone: sanitizeForSubmission(formData.phone),
+        subject: sanitizeForSubmission(formData.subject),
+        message: sanitizeForSubmission(formData.message),
+        type: 'contact'
+      };
 
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to send message');
+
+
+      if (backendEnabled) {
+
+        const responseData = await submitContactEmail(sanitizedData);
+
+        if (responseData && responseData.success) {
+          setSubmitStatus("success");
+          setErrorMessage(null);
+          setFormData({
+            name: '',
+            email: '',
+            phone: '',
+            subject: '',
+            message: ''
+          });
+        } else {
+          const backendError =
+            (responseData && (responseData.message || responseData.error)) ||
+            (responseData && Array.isArray(responseData.errors) && responseData.errors[0] && responseData.errors[0].msg) ||
+            "Failed to send message. Please try again.";
+          setErrorMessage(backendError);
+          setSubmitStatus("error");
+        }
+      } else {
+        // Fallback: show warning if backend is not enabled
+        setErrorMessage(null);
+        setSubmitStatus("warning");
       }
-
-      setIsSubmitting(false);
-      setSubmitStatus('success');
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        subject: '',
-        message: ''
-      });
-      
-      // Clear success message after 5 seconds
-      setTimeout(() => setSubmitStatus(null), 5000);
     } catch (error) {
-      console.error('Submission error:', error);
+      setErrorMessage(error.message || "An unexpected error occurred. Please try again.");
+      setSubmitStatus("error");
+    } finally {
       setIsSubmitting(false);
-      setSubmitStatus('error');
-      setTimeout(() => setSubmitStatus(null), 5000);
     }
+
+    // Clear message after 5 seconds
+    setTimeout(() => setSubmitStatus(null), 5000);
   };
 
   return (
@@ -170,6 +239,8 @@ const ContactForm = () => {
                 onChange={handleChange}
                 className={errors.phone ? 'error' : ''}
                 placeholder="+20 XXX XXX XXXX"
+                inputMode="numeric"
+                pattern="[0-9+\-\s()]*"
               />
               {errors.phone && <span className="error-message">{errors.phone}</span>}
             </div>
@@ -191,15 +262,26 @@ const ContactForm = () => {
 
           <div className="form-group">
             <label htmlFor="message">Message <span className="required">*</span></label>
-            <textarea
-              id="message"
-              name="message"
-              value={formData.message}
-              onChange={handleChange}
-              className={errors.message ? 'error' : ''}
-              rows="6"
-              placeholder="Tell us about your requirements..."
-            ></textarea>
+            <div style={{ position: 'relative' }}>
+              <textarea
+                id="message"
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                className={errors.message ? 'error' : ''}
+                rows="6"
+                placeholder="Tell us about your requirements..."
+                maxLength="2000"
+              ></textarea>
+              <div style={{
+                fontSize: '12px',
+                color: formData.message.length >= 1800 ? '#dc2626' : '#6b7280',
+                marginTop: '4px',
+                textAlign: 'right'
+              }}>
+                {formData.message.length} / 2000 characters
+              </div>
+            </div>
             {errors.message && <span className="error-message">{errors.message}</span>}
           </div>
 
@@ -209,9 +291,15 @@ const ContactForm = () => {
             </div>
           )}
 
+          {submitStatus === 'warning' && (
+            <div className="warning-message" style={{ padding: '16px', backgroundColor: '#fef3cd', color: '#856404', borderRadius: '4px', marginBottom: '20px' }}>
+              ⚠ Thank you for your message. Our contact service is being configured. We will contact you shortly.
+            </div>
+          )}
+
           {submitStatus === 'error' && (
             <div className="error-message" style={{ padding: '16px', backgroundColor: '#fee', color: '#c33', borderRadius: '4px', marginBottom: '20px' }}>
-              ✗ There was an error sending your message. Please try again or contact us directly.
+              ✗ {errorMessage || "There was an error sending your message. Please try again or contact us directly."}
             </div>
           )}
 

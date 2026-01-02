@@ -21,7 +21,7 @@ npm install
 
 1. Create a PostgreSQL database:
 ```sql
-CREATE DATABASE horas_cert;
+CREATE DATABASE horascert;
 ```
 
 2. Update the `.env` file with your database connection string:

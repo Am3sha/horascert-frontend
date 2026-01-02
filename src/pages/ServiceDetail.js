@@ -244,7 +244,7 @@ const ServiceDetail = () => {
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
         const img = new Image();
-        
+
         img.onload = () => {
           canvas.width = img.width;
           canvas.height = img.height;
@@ -262,7 +262,7 @@ const ServiceDetail = () => {
             }
           }, 'image/png');
         };
-        
+
         img.onerror = () => {
           // Fallback: download SVG directly
           const svgBlob = new Blob([svgData], { type: 'image/svg+xml' });
@@ -275,11 +275,10 @@ const ServiceDetail = () => {
           document.body.removeChild(link);
           URL.revokeObjectURL(url);
         };
-        
+
         img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
       }
     } catch (error) {
-      console.error('Error downloading QR code:', error);
       alert('Unable to download QR code. Please try right-clicking on the QR code and saving the image.');
     }
   };
@@ -362,8 +361,8 @@ const ServiceDetail = () => {
               <div className="certificate-image-card">
                 <h3>Certificate</h3>
                 <div className="certificate-image-container">
-                  <img 
-                    src={certificateImages[serviceId] || certificateImages['iso-9001']} 
+                  <img
+                    src={certificateImages[serviceId] || certificateImages['iso-9001']}
                     alt={`${service.name} Certificate`}
                     className="certificate-image"
                     onError={(e) => {

@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer');
+const logger = require('../utils/logger');
 
 // Create reusable transporter object using SMTP transport
 const createTransporter = () => {
@@ -21,9 +22,9 @@ const createTransporter = () => {
 const sendApplicationEmail = async (applicationData) => {
   try {
     const transporter = createTransporter();
-    
+
     // Format certifications array
-    const certifications = applicationData.certificationsRequested 
+    const certifications = applicationData.certificationsRequested
       ? JSON.parse(applicationData.certificationsRequested).join(', ')
       : 'None specified';
 
@@ -53,8 +54,8 @@ const sendApplicationEmail = async (applicationData) => {
       <h3>Certification Details:</h3>
       <p><strong>Certifications Requested:</strong> ${certifications}</p>
       <p><strong>Current Certifications:</strong> ${applicationData.currentCertifications || 'None'}</p>
-      <p><strong>Preferred Audit Date:</strong> ${applicationData.preferredAuditDate 
-        ? new Date(applicationData.preferredAuditDate).toLocaleDateString() 
+      <p><strong>Preferred Audit Date:</strong> ${applicationData.preferredAuditDate
+        ? new Date(applicationData.preferredAuditDate).toLocaleDateString()
         : 'Not specified'}</p>
       
       ${applicationData.subject ? `<h3>Subject:</h3><p>${applicationData.subject}</p>` : ''}
@@ -75,7 +76,7 @@ const sendApplicationEmail = async (applicationData) => {
     const info = await transporter.sendMail(mailOptions);
     return { success: true, messageId: info.messageId };
   } catch (error) {
-    console.error('Error sending email:', error);
+    logger.error('Error sending application email:', error);
     return { success: false, error: error.message };
   }
 };
@@ -88,7 +89,7 @@ const sendApplicationEmail = async (applicationData) => {
 const sendContactEmail = async (contactData) => {
   try {
     const transporter = createTransporter();
-    
+
     const emailBody = `
       <h2>New Contact Form Submission</h2>
       
@@ -116,7 +117,47 @@ const sendContactEmail = async (contactData) => {
     const info = await transporter.sendMail(mailOptions);
     return { success: true, messageId: info.messageId };
   } catch (error) {
-    console.error('Error sending email:', error);
+    logger.error('Error sending contact email:', error);
+    return { success: false, error: error.message };
+  }
+};
+
+/**
+ * Send certificate notification email
+ * @param {Object} certificate - Certificate document
+ * @returns {Promise<Object>} - Email send result
+ */
+const sendCertificateNotification = async (certificate) => {
+  try {
+    const transporter = createTransporter();
+
+    const emailBody = `
+      <h2>New Certificate Created</h2>
+      
+      <h3>Certificate Information:</h3>
+      <p><strong>Certificate Number:</strong> ${certificate.certificateNumber}</p>
+      <p><strong>Company Name:</strong> ${certificate.companyName}</p>
+      <p><strong>Standard:</strong> ${certificate.standard}</p>
+      <p><strong>Scope:</strong> ${certificate.scope}</p>
+      <p><strong>Issue Date:</strong> ${certificate.issueDate ? new Date(certificate.issueDate).toLocaleDateString() : 'N/A'}</p>
+      <p><strong>Expiry Date:</strong> ${certificate.expiryDate ? new Date(certificate.expiryDate).toLocaleDateString() : 'N/A'}</p>
+      <p><strong>Status:</strong> ${certificate.status || 'active'}</p>
+      
+      <hr>
+      <p><small>Created on: ${new Date().toLocaleString()}</small></p>
+    `;
+
+    const mailOptions = {
+      from: `"HORAS-Cert Website" <${process.env.EMAIL_FROM || process.env.MAIL_USER || process.env.EMAIL_USER}>`,
+      to: process.env.EMAIL_TO || 'info@horas-cert.com',
+      subject: `New Certificate Created: ${certificate.certificateNumber}`,
+      html: emailBody,
+    };
+
+    const info = await transporter.sendMail(mailOptions);
+    return { success: true, messageId: info.messageId };
+  } catch (error) {
+    logger.error('Error sending certificate notification email:', error);
     return { success: false, error: error.message };
   }
 };
@@ -124,5 +165,5 @@ const sendContactEmail = async (contactData) => {
 module.exports = {
   sendApplicationEmail,
   sendContactEmail,
+  sendCertificateNotification
 };
-
