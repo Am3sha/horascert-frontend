@@ -59,7 +59,7 @@ const Navbar = () => {
           <div className="navbar-content">
             <Link to="/" className="logo">
               <div className="logo-icon">
-                <span>H</span>
+                <img src="/imgeteam\78e306e6-0535-4e1c-a4ae-8f5895dc1c44.png"  />
               </div>
               <div className="logo-text">
                 <h2>HORAS Cert</h2>

@@ -187,24 +187,7 @@ const CertificateView = () => {
                         </table>
                     </div>
 
-                    {/* Technical Sectors Table */}
-                    <div className="section">
-                        <h2>TECHNICAL SECTORS (0)</h2>
-                        <table className="certificate-table">
-                            <thead>
-                                <tr>
-                                    <th>Sector Code</th>
-                                    <th>Sector Name</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>—</td>
-                                    <td>No Results Found</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                   
 
                     {/* Conformity Assessment */}
                     <div className="conformity-assessment-section">
@@ -213,8 +196,8 @@ const CertificateView = () => {
                             <div className="conformity-card">
                                 <div className="conformity-image-container">
                                     <img
-                                        src="/imgeteam/horas-high-resolution-logo.png"
-                                        alt="HORAS-CERT Logo"
+                                        src="/imgeteam\78e306e6-0535-4e1c-a4ae-8f5895dc1c44.png"
+                                        alt="HORASCERT Logo"
                                         className="conformity-image"
                                     />
                                 </div>

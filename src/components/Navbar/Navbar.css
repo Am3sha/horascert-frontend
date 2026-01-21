@@ -26,8 +26,8 @@
   color: var(--white);
 }
 .logo-icon {
-  width: 48px;
-  height: 48px;
+  width: 55px;
+  height: 58px;
   background: linear-gradient(135deg, var(--accent-gold) 0%, var(--gold-dark) 100%);
   border-radius: 8px;
   display: flex;
@@ -36,7 +36,7 @@
 }
 
 .logo-icon span {
-  font-size: 1.75rem;
+  font-size: 2.5rem;
   font-weight: 700;
   color: var(--primary-navy);
   font-family: 'Poppins', sans-serif;
