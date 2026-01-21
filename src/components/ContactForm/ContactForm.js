@@ -141,8 +141,9 @@ const ContactForm = () => {
     setSubmitStatus(null);
 
     try {
-      // Check if backend is enabled via environment variable
-      const backendEnabled = process.env.REACT_APP_BACKEND_ENABLED === "true";
+      // Backend is enabled by default.
+      // Only disable submission if explicitly set to "false".
+      const backendEnabled = process.env.REACT_APP_BACKEND_ENABLED !== 'false';
 
       // Prepare sanitized data
       const sanitizedData = {
@@ -154,35 +155,36 @@ const ContactForm = () => {
         type: 'contact'
       };
 
-      if (backendEnabled) {
-        const responseData = await submitContactEmail(sanitizedData);
-
-        if (responseData && responseData.success) {
-          // ✅ Show success immediately - message is in database!
-          setSubmitStatus("success");
-          setErrorMessage(null);
-          setFormData({
-            name: '',
-            email: '',
-            phone: '',
-            subject: '',
-            message: ''
-          });
-          // ✅ Clear loading state instantly for instant UX feedback
-          setIsSubmitting(false);
-        } else {
-          const backendError =
-            (responseData && (responseData.message || responseData.error)) ||
-            (responseData && Array.isArray(responseData.errors) && responseData.errors[0] && responseData.errors[0].msg) ||
-            "Failed to send message. Please try again.";
-          setErrorMessage(backendError);
-          setSubmitStatus("error");
-          setIsSubmitting(false);
-        }
-      } else {
+      if (!backendEnabled) {
         // Fallback: show warning if backend is not enabled
         setErrorMessage(null);
         setSubmitStatus("warning");
+        setIsSubmitting(false);
+        setTimeout(() => setSubmitStatus(null), 5000);
+        return;
+      }
+
+      const responseData = await submitContactEmail(sanitizedData);
+
+      if (responseData && responseData.success) {
+        // ✅ Show success only after API success (saved in DB)
+        setSubmitStatus("success");
+        setErrorMessage(null);
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          subject: '',
+          message: ''
+        });
+        setIsSubmitting(false);
+      } else {
+        const backendError =
+          (responseData && (responseData.message || responseData.error)) ||
+          (responseData && Array.isArray(responseData.errors) && responseData.errors[0] && responseData.errors[0].msg) ||
+          "Failed to send message. Please try again.";
+        setErrorMessage(backendError);
+        setSubmitStatus("error");
         setIsSubmitting(false);
       }
     } catch (error) {

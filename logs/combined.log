@@ -1,80 +1,9 @@
-2026-01-21 14:09:59 [[31MERROR[39M] 404 - Certificate not found with number b093951437f04fa09b3342f2 - /api/v1/certificates/certificateId/b093951437f04fa09b3342f2 - GET - 127.0.0.1 {
-  "stack": "ApiError: Certificate not found with number b093951437f04fa09b3342f2\n    at getCertificate (D:\\Frist.c++\\H010\\server\\controllers\\certificateController.js:305:25)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)"
+2026-01-21 20:37:12 [[32MINFO[39M] Notification email sent for contact form {
+  "emailId": "69711cd51d1da0d42e3d0b10"
 }
-2026-01-21 14:09:59 [[31MERROR[39M] 404 - Certificate not found with number b093951437f04fa09b3342f2 - /api/v1/certificates/certificateId/b093951437f04fa09b3342f2 - GET - 127.0.0.1 {
-  "stack": "ApiError: Certificate not found with number b093951437f04fa09b3342f2\n    at getCertificate (D:\\Frist.c++\\H010\\server\\controllers\\certificateController.js:305:25)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)"
+2026-01-21 20:39:25 [[32MINFO[39M] Notification email sent for contact form {
+  "emailId": "69711d5a1d1da0d42e3d0b12"
 }
-2026-01-21 14:10:58 [[31MERROR[39M] 404 - Certificate not found with number b093951437f04fa09b3342f2 - /api/v1/certificates/certificateId/b093951437f04fa09b3342f2 - GET - 127.0.0.1 {
-  "stack": "ApiError: Certificate not found with number b093951437f04fa09b3342f2\n    at getCertificate (D:\\Frist.c++\\H010\\server\\controllers\\certificateController.js:305:25)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)"
-}
-2026-01-21 14:10:59 [[31MERROR[39M] 404 - Certificate not found with number b093951437f04fa09b3342f2 - /api/v1/certificates/certificateId/b093951437f04fa09b3342f2 - GET - 127.0.0.1 {
-  "stack": "ApiError: Certificate not found with number b093951437f04fa09b3342f2\n    at getCertificate (D:\\Frist.c++\\H010\\server\\controllers\\certificateController.js:305:25)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)"
-}
-2026-01-21 14:27:16 [[32MINFO[39M] Application request created in database {
-  "requestId": "6970c6241d1da0d42e3d09c8"
-}
-2026-01-21 14:27:16 [[32MINFO[39M] Uploading file to Supabase {
-  "storageKey": "requests/6970c6241d1da0d42e3d09c8/1768998436729_CamScanner_-_-_._.pdf",
-  "originalName": "CamScanner Ù Ù§-Ù¡Ù -Ù¢Ù Ù¢Ù¥ Ù¢Ù .Ù£Ù¥.pdf",
-  "safeName": "CamScanner_-_-_._.pdf",
-  "mimeType": "application/pdf",
-  "size": 919649,
-  "requestId": "6970c6241d1da0d42e3d09c8",
-  "bucket": "certificates"
-}
-2026-01-21 14:27:18 [[32MINFO[39M] File uploaded successfully {
-  "storageKey": "requests/6970c6241d1da0d42e3d09c8/1768998436729_CamScanner_-_-_._.pdf",
-  "bucket": "certificates",
-  "size": 919649
-}
-2026-01-21 14:27:18 [[32MINFO[39M] File uploaded for application {
-  "requestId": "6970c6241d1da0d42e3d09c8",
-  "fileName": "CamScanner Ù Ù§-Ù¡Ù -Ù¢Ù Ù¢Ù¥ Ù¢Ù .Ù£Ù¥.pdf",
-  "size": 919649
-}
-2026-01-21 14:27:18 [[32MINFO[39M] Files metadata saved to application {
-  "requestId": "6970c6241d1da0d42e3d09c8",
-  "fileCount": 1
-}
-2026-01-21 14:27:20 [[32MINFO[39M] Notification email sent for application {
-  "requestId": "6970c6241d1da0d42e3d09c8"
-}
-2026-01-21 14:28:30 [[32MINFO[39M] File deleted successfully from Supabase {
-  "bucket": "certificates",
-  "storageKey": "requests/6968d2c6b34c9e4f8f1de204/1768477382337_4_5852705875029925232.pdf",
-  "attempt": 1
-}
-2026-01-21 14:28:30 [[32MINFO[39M] Deleted Supabase file for application {
-  "applicationId": "6968d2c6b34c9e4f8f1de204",
-  "bucket": "certificates",
-  "storageKey": "requests/6968d2c6b34c9e4f8f1de204/1768477382337_4_5852705875029925232.pdf"
-}
-2026-01-21 14:28:33 [[32MINFO[39M] File deleted successfully from Supabase {
-  "bucket": "certificates",
-  "storageKey": "requests/696e4104530ffa15fa9b572c/1768833284385_4_5852705875029925232.pdf",
-  "attempt": 1
-}
-2026-01-21 14:28:33 [[32MINFO[39M] Deleted Supabase file for application {
-  "applicationId": "696e4104530ffa15fa9b572c",
-  "bucket": "certificates",
-  "storageKey": "requests/696e4104530ffa15fa9b572c/1768833284385_4_5852705875029925232.pdf"
-}
-2026-01-21 14:28:36 [[32MINFO[39M] File deleted successfully from Supabase {
-  "bucket": "certificates",
-  "storageKey": "requests/695d04849aaa57543fbd2e08/1767703684557_ASS4DISC.pdf",
-  "attempt": 1
-}
-2026-01-21 14:28:36 [[32MINFO[39M] Deleted Supabase file for application {
-  "applicationId": "695d04849aaa57543fbd2e08",
-  "bucket": "certificates",
-  "storageKey": "requests/695d04849aaa57543fbd2e08/1767703684557_ASS4DISC.pdf"
-}
-2026-01-21 15:06:46 [[33MWARN[39M] ⚠️ MongoDB disconnected. Waiting for reconnection... 
-2026-01-21 15:06:49 [[32MINFO[39M] ✅ MongoDB reconnected successfully 
-2026-01-21 15:11:12 [[33MWARN[39M] ⚠️ MongoDB disconnected. Waiting for reconnection... 
-2026-01-21 15:11:12 [[32MINFO[39M] ✅ MongoDB reconnected successfully 
-2026-01-21 16:04:03 [[33MWARN[39M] ⚠️ MongoDB disconnected. Waiting for reconnection... 
-2026-01-21 16:04:04 [[32MINFO[39M] ✅ MongoDB reconnected successfully 
-2026-01-21 16:58:22 [[32MINFO[39M] Notification email sent for contact form {
-  "emailId": "6970e98b1d1da0d42e3d0aa7"
+2026-01-21 20:40:26 [[32MINFO[39M] Notification email sent for contact form {
+  "emailId": "69711d981d1da0d42e3d0b14"
 }
