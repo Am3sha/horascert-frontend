@@ -70,7 +70,8 @@
   }
 
   .services-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
   }
 
   .cta-content h2 {
@@ -78,3 +79,9 @@
   }
 }
 
+@media (max-width: 480px) {
+  .services-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}
