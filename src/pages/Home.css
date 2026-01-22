@@ -58,12 +58,7 @@
   font-size: 1.1rem;
 }
 
-.description-text {
-  margin: 28px 0;
-  color: var(--text-gray);
-  line-height: 1.8;
-  font-size: 1rem;
-}
+
 
 .company-description-image {
   border-radius: 12px;

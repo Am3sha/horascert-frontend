@@ -75,9 +75,7 @@ const Home = () => {
 
                 <p>Food Safety Management Systems ISO 22000:2018</p>
               </ul>
-              <p className="description-text">
-                As a trusted partner in quality excellence, we provide comprehensive certification services that enable organizations to demonstrate their commitment to international standards, enhance operational efficiency, and achieve sustainable growth. Our team of experienced auditors and quality professionals ensures a rigorous yet supportive certification process tailored to your organization's unique needs.
-              </p>
+             
               <Link to="/about" className="btn btn-secondary">
                 Learn More About Us
               </Link>
