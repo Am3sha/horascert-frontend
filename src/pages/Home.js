@@ -51,7 +51,7 @@ const Home = () => {
     }
   ];
 
-  
+
 
   return (
     <div className="home-page">
@@ -75,7 +75,7 @@ const Home = () => {
 
                 <p>Food Safety Management Systems ISO 22000:2018</p>
               </ul>
-             
+
               <Link to="/about" className="btn btn-secondary">
                 Learn More About Us
               </Link>
@@ -84,6 +84,8 @@ const Home = () => {
               <img
                 src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=500&q=75"
                 alt="HORAS-Cert professional certification team"
+                loading="lazy"
+                decoding="async"
               />
             </div>
           </div>
@@ -123,9 +125,13 @@ const Home = () => {
             <div className="accreditation-card">
               <div className="accreditation-image-container">
                 <img
-                  src="/imges/logo-capq.png"
+                  src="/imges/img.png"
                   alt="EGAC Accredited"
                   className="accreditation-image"
+                  loading="lazy"
+                  decoding="async"
+                  width="120"
+                  height="120"
                   onError={(e) => {
                     e.target.style.display = 'none';
                     e.target.nextElementSibling.style.display = 'flex';
@@ -144,6 +150,10 @@ const Home = () => {
                   src="/imges/International_Accreditation_Forum_Logo.svg.png"
                   alt="IAF Member"
                   className="accreditation-image"
+                  loading="lazy"
+                  decoding="async"
+                  width="120"
+                  height="120"
                   onError={(e) => {
                     e.target.style.display = 'none';
                     e.target.nextElementSibling.style.display = 'flex';
@@ -153,7 +163,7 @@ const Home = () => {
                   <span>IAF</span>
                 </div>
               </div>
-              <h3>IAF Member</h3>
+              <h3>IAF</h3>
               <p>Internationally recognized through IAF (International Accreditation Forum) membership</p>
             </div>
             <div className="accreditation-card">
@@ -162,6 +172,10 @@ const Home = () => {
                   src="/imges/download.png"
                   alt="Accreditation"
                   className="accreditation-image"
+                  loading="lazy"
+                  decoding="async"
+                  width="120"
+                  height="120"
                   onError={(e) => {
                     e.target.style.display = 'none';
                     e.target.nextElementSibling.style.display = 'flex';
@@ -171,15 +185,19 @@ const Home = () => {
                   <span>Accreditation</span>
                 </div>
               </div>
-              <h3>Accreditation</h3>
-              <p>Recognized accreditation for quality certification services</p>
+              <h3>ESO Accreditation</h3>
+              <p>The Egyptian Organization for Standards and Quality (EOS)</p>
             </div>
             <div className="accreditation-card">
               <div className="accreditation-image-container">
                 <img
-                  src="/imges/img.png"
+                  src="/imges/logo-capq (1).webp"
                   alt="Certification Body"
                   className="accreditation-image"
+                  loading="lazy"
+                  decoding="async"
+                  width="120"
+                  height="120"
                   onError={(e) => {
                     e.target.style.display = 'none';
                     e.target.nextElementSibling.style.display = 'flex';
@@ -189,8 +207,8 @@ const Home = () => {
                   <span>Certification</span>
                 </div>
               </div>
-              <h3>Certification Body</h3>
-              <p>Authorized certification body for international standards</p>
+              <h3> CAPQ </h3>
+              <p>Authorized certification body for international standards (CAPQ) </p>
             </div>
           </div>
         </div>
@@ -258,7 +276,7 @@ const Home = () => {
         </div>
       </section>
 
-     
+
 
       {/* Contact CTA Section */}
       <section className="contact-cta-section section">

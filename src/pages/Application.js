@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import './Application.css';
 
 // Country list
@@ -39,6 +39,8 @@ const COUNTRIES = [
 const isNumericOnly = (value) => /^[0-9]*$/.test(value);
 
 const Application = () => {
+  const MAX_FILES = 3;
+
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     companyName: '',
@@ -96,6 +98,8 @@ const Application = () => {
   const [submitStatus, setSubmitStatus] = useState(null);
   const [submitError, setSubmitError] = useState('');
   const [attachedFiles, setAttachedFiles] = useState([]);
+  const [fileLimitWarning, setFileLimitWarning] = useState('');
+  const fileInputRef = useRef(null);
   const [dropActive, setDropActive] = useState(false);
   const [openPanels, setOpenPanels] = useState({
     iso9001: true,
@@ -355,21 +359,67 @@ const Application = () => {
     setField(name, value);
   };
 
+  const mergeUniqueFiles = (prevFiles, incomingFiles) => {
+    const next = [];
+    const seen = new Set();
+
+    const add = (file) => {
+      const key = `${file.name}-${file.size}-${file.lastModified}`;
+      if (seen.has(key)) return;
+      seen.add(key);
+      next.push(file);
+    };
+
+    (prevFiles || []).forEach(add);
+    (incomingFiles || []).forEach(add);
+
+    return next;
+  };
+
   const handleFilesChange = (e) => {
-    const files = Array.from((e && e.target && e.target.files) ? e.target.files : []);
-    if (files.length === 0) {
-      setAttachedFiles([]);
+    const incoming = Array.from((e && e.target && e.target.files) ? e.target.files : []);
+    if (incoming.length === 0) {
+      setFileLimitWarning('');
       return;
     }
 
-    // Store the actual File objects, not Base64
-    setAttachedFiles(files);
+    if (errors.files) {
+      setErrors((prev) => ({
+        ...prev,
+        files: ''
+      }));
+    }
+
+    setAttachedFiles((prev) => {
+      const next = mergeUniqueFiles(prev, incoming);
+      if (next.length > MAX_FILES) {
+        setFileLimitWarning('You can upload up to 3 files. Extra files were ignored.');
+        return next.slice(0, MAX_FILES);
+      }
+      setFileLimitWarning('');
+      return next;
+    });
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    } else if (e && e.target) {
+      e.target.value = '';
+    }
   };
 
   const addFiles = (files) => {
     const incoming = Array.from(files || []);
     if (incoming.length === 0) return;
-    setAttachedFiles((prev) => [...prev, ...incoming]);
+
+    setAttachedFiles((prev) => {
+      const next = mergeUniqueFiles(prev, incoming);
+      if (next.length > MAX_FILES) {
+        setFileLimitWarning('You can upload up to 3 files. Extra files were ignored.');
+        return next.slice(0, MAX_FILES);
+      }
+      setFileLimitWarning('');
+      return next;
+    });
     if (errors.files) {
       setErrors((prev) => ({
         ...prev,
@@ -380,6 +430,7 @@ const Application = () => {
 
   const removeFileAt = (idx) => {
     setAttachedFiles((prev) => prev.filter((_, i) => i !== idx));
+    setFileLimitWarning('');
   };
 
   const onDrop = (e) => {
@@ -900,10 +951,19 @@ const Application = () => {
                 )}
 
                 <div className="form-section card">
-                  <div className="section-title">File Upload</div>
+                  <div className="section-title">Please attach the following documents</div>
 
                   <div
                     className={`dropzone ${dropActive ? 'active' : ''}`}
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => fileInputRef.current && fileInputRef.current.click()}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        if (fileInputRef.current) fileInputRef.current.click();
+                      }
+                    }}
                     onDragEnter={(e) => {
                       e.preventDefault();
                       setDropActive(true);
@@ -918,11 +978,29 @@ const Application = () => {
                     }}
                     onDrop={onDrop}
                   >
-                    <div className="dropzone-title">Drag & drop files here</div>
-                    <div className="dropzone-subtitle">Valid certificate, last audit reports, outstanding nonconformities</div>
-                    <input className="dropzone-input" id="files" name="files" type="file" multiple accept="application/pdf,image/jpeg,image/png" onChange={handleFilesChange} />
+                    <div className="upload-box">
+                      <div className="upload-icon" aria-hidden="true">📎</div>
+                      <div className="upload-content">
+                        <div className="upload-title">Please attach the following documents</div>
+                        <div className="upload-description">Please attach: Valid Certificate, last audit reports and any outstanding nonconformities</div>
+                        <div className="upload-hint">You can upload up to 3 files (PDF, DOC, DOCX, JPG, PNG)</div>
+                        <div className="upload-actions">
+                          <button type="button" className="upload-browse" onClick={(evt) => {
+                            evt.preventDefault();
+                            evt.stopPropagation();
+                            if (fileInputRef.current) fileInputRef.current.click();
+                          }}>
+                            Choose files
+                          </button>
+                          <div className="upload-secondary">or drag and drop files here</div>
+                        </div>
+                      </div>
+                    </div>
+                    {dropActive && <div className="dropzone-overlay">Drop files here</div>}
+                    <input ref={fileInputRef} className="dropzone-input" id="files" name="files" type="file" multiple accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,image/png" onChange={handleFilesChange} />
                   </div>
                   {errors.files && <div className="form-error">{errors.files}</div>}
+                  {fileLimitWarning && <div className="file-warning">{fileLimitWarning}</div>}
 
                   {attachedFiles.length > 0 && (
                     <div className="file-list">

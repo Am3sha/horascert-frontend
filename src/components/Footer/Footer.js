@@ -139,7 +139,7 @@ const Footer = () => {
         <div className="container">
           <div className="footer-bottom-content">
             <div className="footer-copyright">
-              <p>&copy; {new Date().getFullYear()} HORAS-Cert. All rights reserved.</p>
+              <p>&copy; {new Date().getFullYear()} HORAS Cert All rights reserved.</p>
             </div>
           </div>
         </div>

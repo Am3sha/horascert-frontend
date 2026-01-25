@@ -187,7 +187,7 @@ const CertificateView = () => {
                         </table>
                     </div>
 
-                   
+
 
                     {/* Conformity Assessment */}
                     <div className="conformity-assessment-section">
@@ -196,9 +196,11 @@ const CertificateView = () => {
                             <div className="conformity-card">
                                 <div className="conformity-image-container">
                                     <img
-                                        src="/imgeteam\78e306e6-0535-4e1c-a4ae-8f5895dc1c44.png"
+                                        src="/imgeteam/78e306e6-0535-4e1c-a4ae-8f5895dc1c44.png"
                                         alt="HORASCERT Logo"
                                         className="conformity-image"
+                                        loading="lazy"
+                                        decoding="async"
                                     />
                                 </div>
                                 <h3 className="conformity-card-title">Certification Body</h3>
@@ -215,6 +217,8 @@ const CertificateView = () => {
                                         src="/imges/img.png"
                                         alt="EGAC Logo"
                                         className="conformity-image"
+                                        loading="lazy"
+                                        decoding="async"
                                     />
                                 </div>
                                 <h3 className="conformity-card-title">Accreditation Body</h3>
@@ -231,6 +235,8 @@ const CertificateView = () => {
                                         src="/imges/International_Accreditation_Forum_Logo.svg.png"
                                         alt="IAF Logo"
                                         className="conformity-image"
+                                        loading="lazy"
+                                        decoding="async"
                                     />
                                 </div>
                                 <h3 className="conformity-card-title">Assessment Association</h3>

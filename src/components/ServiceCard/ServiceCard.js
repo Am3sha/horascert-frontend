@@ -6,7 +6,15 @@ const ServiceCard = ({ service }) => {
   return (
     <div className="service-card">
       <div className="service-image-container">
-        <img src={service.icon} alt={service.name} className="service-image" />
+        <img
+          src={service.icon}
+          alt={service.name}
+          className="service-image"
+          loading="lazy"
+          decoding="async"
+          width="200"
+          height="200"
+        />
       </div>
       <h3 className="service-name">{service.name}</h3>
       <p className="service-tagline">{service.tagline}</p>

@@ -92,9 +92,13 @@ const About = () => {
             <div className="accreditation-card">
               <div className="accreditation-image-container">
                 <img
-                  src="/imges/logo-capq.png"
+                  src="/imges/img.png"
                   alt="EGAC Accredited"
                   className="accreditation-image"
+                  loading="lazy"
+                  decoding="async"
+                  width="120"
+                  height="120"
                   onError={(e) => {
                     e.target.style.display = 'none';
                     e.target.nextElementSibling.style.display = 'flex';
@@ -104,15 +108,19 @@ const About = () => {
                   <span>EGAC</span>
                 </div>
               </div>
-              <h3>EGAC Accredited</h3>
+              <h3>EGAC</h3>
               <p>Accredited by the Egyptian Accreditation Council (EGAC) for ISO certification services</p>
             </div>
             <div className="accreditation-card">
               <div className="accreditation-image-container">
                 <img
                   src="/imges/International_Accreditation_Forum_Logo.svg.png"
-                  alt="IAF Member"
+                  alt="IAF"
                   className="accreditation-image"
+                  loading="lazy"
+                  decoding="async"
+                  width="120"
+                  height="120"
                   onError={(e) => {
                     e.target.style.display = 'none';
                     e.target.nextElementSibling.style.display = 'flex';
@@ -122,7 +130,7 @@ const About = () => {
                   <span>IAF</span>
                 </div>
               </div>
-              <h3>IAF Member</h3>
+              <h3>IAF</h3>
               <p>Internationally recognized through IAF (International Accreditation Forum) membership</p>
             </div>
             <div className="accreditation-card">
@@ -131,6 +139,10 @@ const About = () => {
                   src="/imges/download.png"
                   alt="Accreditation"
                   className="accreditation-image"
+                  loading="lazy"
+                  decoding="async"
+                  width="120"
+                  height="120"
                   onError={(e) => {
                     e.target.style.display = 'none';
                     e.target.nextElementSibling.style.display = 'flex';
@@ -140,15 +152,19 @@ const About = () => {
                   <span>Accreditation</span>
                 </div>
               </div>
-              <h3>Accreditation</h3>
+              <h3>EOS</h3>
               <p>Recognized accreditation for quality certification services</p>
             </div>
             <div className="accreditation-card">
               <div className="accreditation-image-container">
                 <img
-                  src="/imges/img.png"
-                  alt="Certification Body"
+                  src="/imges/logo-capq (1).webp"
+                  alt="CAPQ"
                   className="accreditation-image"
+                  loading="lazy"
+                  decoding="async"
+                  width="120"
+                  height="120"
                   onError={(e) => {
                     e.target.style.display = 'none';
                     e.target.nextElementSibling.style.display = 'flex';
@@ -158,7 +174,7 @@ const About = () => {
                   <span>Certification</span>
                 </div>
               </div>
-              <h3>Certification Body</h3>
+              <h3>CAPQ</h3>
               <p>Authorized certification body for international standards</p>
             </div>
           </div>

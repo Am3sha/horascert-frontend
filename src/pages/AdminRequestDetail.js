@@ -173,6 +173,8 @@ export default function AdminRequestDetail() {
                             src={url}
                             alt={file.name || 'Document'}
                             className="file-preview-image"
+                            loading="lazy"
+                            decoding="async"
                             onError={(e) => {
                                 e.target.style.display = 'none';
                                 e.target.nextSibling.style.display = 'inline';

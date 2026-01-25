@@ -30,10 +30,14 @@ const Clients = () => {
             {clients.map(client => (
               <div key={client.id} className="client-card">
                 <div className="client-logo-wrapper">
-                  <img 
-                    src={client.logo} 
+                  <img
+                    src={client.logo}
                     alt={client.name}
                     className="client-logo"
+                    loading="lazy"
+                    decoding="async"
+                    width="150"
+                    height="150"
                     onError={(e) => {
                       e.target.style.display = 'none';
                     }}
