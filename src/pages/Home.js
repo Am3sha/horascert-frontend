@@ -141,7 +141,7 @@ const Home = () => {
                   <span>EGAC</span>
                 </div>
               </div>
-              <h3>EGAC Accredited</h3>
+              <h3>EGAC</h3>
               <p>Accredited by the Egyptian Accreditation Council (EGAC) for ISO certification services</p>
             </div>
             <div className="accreditation-card">
@@ -185,7 +185,7 @@ const Home = () => {
                   <span>Accreditation</span>
                 </div>
               </div>
-              <h3>ESO Accreditation</h3>
+              <h3>ESO</h3>
               <p>The Egyptian Organization for Standards and Quality (EOS)</p>
             </div>
             <div className="accreditation-card">
@@ -208,7 +208,7 @@ const Home = () => {
                 </div>
               </div>
               <h3> CAPQ </h3>
-              <p>Authorized certification body for international standards (CAPQ) </p>
+              <p>Authorized National Plant Protection Organization of the Arab Republic of Egypt (CAPQ)</p>
             </div>
           </div>
         </div>

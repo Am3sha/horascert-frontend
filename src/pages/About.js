@@ -6,22 +6,24 @@ const About = () => {
     <div className="about-page">
       <div className="page-header">
         <div className="container">
-          <img
-            src="/imgeteam/78e306e6-0535-4e1c-a4ae-8f5895dc1c44.png"
-            alt="HORAS Cert Logo"
-            className="company-logo"
-            onError={(e) => {
-              e.target.style.display = 'none';
-            }}
-          />
-          <h1>WHO WE ARE</h1>
+          <div className="about-header-row">
+            <h1 className="about-header-title">About Us</h1>
+            <img
+              src="/imgeteam/78e306e6-0535-4e1c-a4ae-8f5895dc1c44.png"
+              alt="HORAS Cert Logo"
+              className="company-logo about-header-logo"
+              onError={(e) => {
+                e.target.style.display = 'none';
+              }}
+            />
+          </div>
         </div>
       </div>
 
       <section className="section about-section">
         <div className="container">
           <p className="about-description">
-            <strong>HORAS Cert</strong> Organization for Quality Systems and Certifications is the accredited certification body recognized by the National Accreditation Council.
+            <strong>HORAS Cert</strong> Organization for Quality Systems and Certifications is the accredited certification body recognized by the National Accreditation Council for the following standards.
           </p>
 
           <h3>Our Accredited Standards</h3>
@@ -153,7 +155,7 @@ const About = () => {
                 </div>
               </div>
               <h3>EOS</h3>
-              <p>Recognized accreditation for quality certification services</p>
+              <p>The Egyptian Organization for Standards and Quality (EOS)</p>
             </div>
             <div className="accreditation-card">
               <div className="accreditation-image-container">
@@ -175,7 +177,7 @@ const About = () => {
                 </div>
               </div>
               <h3>CAPQ</h3>
-              <p>Authorized certification body for international standards</p>
+              <p>Authorized National Plant Protection Organization of the Arab Republic of Egypt (CAPQ) </p>
             </div>
           </div>
         </div>
