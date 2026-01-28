@@ -81,7 +81,7 @@ const Home = () => {
             </div>
             <div className="company-description-image">
               <img
-                src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=500&q=75"
+                src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=500&q=75&fm=webp"
                 alt="HORAS-Cert professional certification team"
                 loading="lazy"
                 decoding="async"
