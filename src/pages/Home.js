@@ -54,8 +54,10 @@ const Home = () => {
 
 
   return (
-    <div className="home-page">
-      <HeroSlider />
+    <article className="home-page">
+      <header>
+        <HeroSlider />
+      </header>
 
       {/* Company Description Section */}
       <section className="company-description-section section">
@@ -285,7 +287,7 @@ const Home = () => {
           <ContactForm />
         </div>
       </section>
-    </div>
+    </article>
   );
 };
 

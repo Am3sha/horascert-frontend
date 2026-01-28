@@ -24,9 +24,8 @@ const ServiceCard = ({ service }) => {
       <Link
         to={`/services/${service.id}`}
         className="btn btn-secondary service-link"
-        aria-label={`Learn more about ${service.name}`}
       >
-        Learn More
+        View {service.name} Certification
       </Link>
     </div>
   );

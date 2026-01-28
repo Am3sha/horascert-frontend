@@ -1,3 +1,2 @@
-2026-01-28 16:45:59 [[32MINFO[39M] Server is running on port 5001 
-2026-01-28 16:45:59 [[32MINFO[39M] Environment: development 
-2026-01-28 16:46:01 [[32MINFO[39M] ✅ MongoDB connected successfully 
+2026-01-28 17:59:47 [[33MWARN[39M] ⚠️ MongoDB disconnected. Waiting for reconnection... 
+2026-01-28 17:59:58 [[32MINFO[39M] ✅ MongoDB reconnected successfully 
