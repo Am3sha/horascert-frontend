@@ -64,9 +64,7 @@ const AddCertificateForm = ({ onSuccess }) => {
             });
             downloadQRCode(dataUrl, filename);
         } catch (err) {
-            if (process.env.NODE_ENV !== 'production') {
-                console.error('Failed to generate QR code:', err);
-            }
+            // Silently handle QR code generation errors
         }
     };
 
@@ -125,11 +123,8 @@ const AddCertificateForm = ({ onSuccess }) => {
                 // Generate and download QR Code in background (non-blocking)
                 // This doesn't block UX from showing success
                 generateAndDownloadQR(certificateUrl, `QR_${data.data.certificateNumber}.png`)
-                    .catch(qrErr => {
+                    .catch(() => {
                         // Silently handle QR code download errors - don't disrupt UX
-                        if (process.env.NODE_ENV !== 'production') {
-                            console.error('QR download error:', qrErr);
-                        }
                     });
 
                 // Optional: Redirect after success is visible (brief pause for UX clarity)
@@ -162,9 +157,6 @@ const AddCertificateForm = ({ onSuccess }) => {
             }
 
         } catch (err) {
-            if (process.env.NODE_ENV !== 'production') {
-                console.error('Certificate creation error:', err);
-            }
             setError(`Network error: ${err.message || 'Failed to connect to server'}`);
             setLoading(false);
         }

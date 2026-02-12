@@ -15,16 +15,8 @@ const instance = axios.create({
     timeout: 60000, // 60 seconds - sufficient for async processing (was 30000)
 });
 
-// Add Authorization header from localStorage for authenticated requests
-// This acts as fallback if cookies are not sent
+// Add request interceptor only to ensure withCredentials is set on every request
 instance.interceptors.request.use((config) => {
-    const token = localStorage.getItem('token');
-    if (token) {
-        // Only add Authorization header if not already present
-        if (!config.headers.Authorization) {
-            config.headers.Authorization = `Bearer ${token}`;
-        }
-    }
     // Ensure withCredentials is set on every request
     config.withCredentials = true;
     return config;
@@ -39,9 +31,6 @@ instance.interceptors.response.use(
     (err) => {
         const status = err && err.response ? err.response.status : undefined;
         if (status === 401) {
-            // Clear token from localStorage on auth failure
-            localStorage.removeItem('token');
-
             // Smart redirect: Only redirect if on admin/dashboard routes
             const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
             const isAdminRoute = pathname.startsWith('/admin') || pathname.startsWith('/dashboard');
@@ -222,14 +211,11 @@ export async function adminLogin(email, password) {
 
 export async function adminLogout() {
     try {
-        // Clear localStorage token
-        localStorage.removeItem('token');
         // Call backend logout to clear cookie
         const response = await handle(instance.post(`${API_PREFIX}/auth/logout`));
         return response;
     } catch (error) {
-        // Still clear localStorage even if backend call fails
-        localStorage.removeItem('token');
+        // Even if backend call fails, return success so frontend can redirect
         return { success: true, message: 'Logged out successfully' };
     }
 }

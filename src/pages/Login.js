@@ -38,14 +38,8 @@ export default function Login() {
             const res = await adminLogin(requestData.email, requestData.password);
 
             if (res && res.success) {
-                // Store token in localStorage for backup and Authorization header
-                if (res?.token) {
-                    localStorage.setItem('token', res.token);
-                }
-
                 // Login successful, cookie is set by backend
-                // Reload page to let App.js verify the new token
-                // This ensures isAdmin state is updated before navigating
+                // Navigate to dashboard; App.js will verify auth via ProtectedRoute
                 window.location.href = '/dashboard';
             } else {
                 // Friendly error message

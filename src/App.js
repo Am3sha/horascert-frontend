@@ -45,7 +45,7 @@ function Loading() {
 }
 
 function AppContent() {
-  const [authChecked, setAuthChecked] = useState(false);
+  const [authLoading, setAuthLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
   const location = useLocation();
 
@@ -68,7 +68,7 @@ function AppContent() {
         }
       } finally {
         if (mounted) {
-          setAuthChecked(true);
+          setAuthLoading(false);
         }
       }
     };
@@ -88,6 +88,17 @@ function AppContent() {
     };
   }, []);
 
+  // Protected Route wrapper
+  const ProtectedRoute = ({ children }) => {
+    if (authLoading) {
+      return <Loading />;
+    }
+    if (!isAdmin) {
+      return <Navigate to="/login" replace />;
+    }
+    return children;
+  };
+
   // Hide navbar and footer on admin pages
   const isAdminPath = location.pathname === '/dashboard' || location.pathname.startsWith('/admin/') || location.pathname === '/login';
   const hideNavbarAndFooter = isAdminPath;
@@ -104,19 +115,25 @@ function AppContent() {
             <Route
               path="/dashboard"
               element={
-                authChecked ? (isAdmin ? <AdminDashboard /> : <Navigate to="/login" replace />) : <Loading />
+                <ProtectedRoute>
+                  <AdminDashboard />
+                </ProtectedRoute>
               }
             />
             <Route
               path="/admin/requests"
               element={
-                authChecked ? (isAdmin ? <AdminRequests /> : <Navigate to="/login" replace />) : <Loading />
+                <ProtectedRoute>
+                  <AdminRequests />
+                </ProtectedRoute>
               }
             />
             <Route
               path="/admin/requests/:id"
               element={
-                authChecked ? (isAdmin ? <AdminRequestDetail /> : <Navigate to="/login" replace />) : <Loading />
+                <ProtectedRoute>
+                  <AdminRequestDetail />
+                </ProtectedRoute>
               }
             />
             <Route path="/certificates/:certificateNumber" element={<CertificateDetail />} />
