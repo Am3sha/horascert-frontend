@@ -54,7 +54,7 @@ app.use(mongoSanitize());
 const allowedOrigins = [
     'https://horascert.com',
     'https://www.horascert.com',
-    'https://horascert-frontend.vercel.app',
+    'https://horsecert.vercel.app',
     'http://localhost:3000'
 ];
 
@@ -68,6 +68,12 @@ const corsOptions = {
         ) {
             return callback(null, true);
         }
+
+        // Log CORS rejection for debugging
+        console.error('CORS Rejected:', {
+            origin,
+            allowedOrigins
+        });
 
         return callback(new ApiError(403, 'Not allowed by CORS'));
     },
