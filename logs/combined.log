@@ -1,0 +1,16 @@
+2026-02-15 18:15:45 [[31MERROR[39M] Error sending application status update email to client: You can only send testing emails to your own email address (amashayousef007@gmail.com). To send emails to other recipients, please verify a domain at resend.com/domains, and change the `from` address to an email using this domain. {
+  "stack": "Error: You can only send testing emails to your own email address (amashayousef007@gmail.com). To send emails to other recipients, please verify a domain at resend.com/domains, and change the `from` address to an email using this domain.\n    at IncomingMessage.<anonymous> (D:\\Frist.c++\\H010\\server\\config\\email.js:78:20)\n    at IncomingMessage.emit (node:events:530:35)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)"
+}
+2026-02-15 18:15:45 [[33MWARN[39M] Failed to send application status update email to client {
+  "requestId": "69911ae36a113dcf2be07029",
+  "to": "fbfbfx@gmail.com",
+  "error": "You can only send testing emails to your own email address (amashayousef007@gmail.com). To send emails to other recipients, please verify a domain at resend.com/domains, and change the `from` address to an email using this domain."
+}
+2026-02-15 18:15:46 [[31MERROR[39M] Error sending application status update email to client: You can only send testing emails to your own email address (amashayousef007@gmail.com). To send emails to other recipients, please verify a domain at resend.com/domains, and change the `from` address to an email using this domain. {
+  "stack": "Error: You can only send testing emails to your own email address (amashayousef007@gmail.com). To send emails to other recipients, please verify a domain at resend.com/domains, and change the `from` address to an email using this domain.\n    at IncomingMessage.<anonymous> (D:\\Frist.c++\\H010\\server\\config\\email.js:78:20)\n    at IncomingMessage.emit (node:events:530:35)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)"
+}
+2026-02-15 18:15:46 [[33MWARN[39M] Failed to send application status update email to client {
+  "requestId": "69911ae36a113dcf2be07029",
+  "to": "fbfbfx@gmail.com",
+  "error": "You can only send testing emails to your own email address (amashayousef007@gmail.com). To send emails to other recipients, please verify a domain at resend.com/domains, and change the `from` address to an email using this domain."
+}
