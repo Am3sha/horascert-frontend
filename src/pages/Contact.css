@@ -130,6 +130,18 @@
   margin-bottom: 12px;
 }
 
+.map-container {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  animation: fadeIn 1s ease;
+  position: relative;
+}
+
+.map-container iframe {
+  border: none;
+}
+
 .contact-map-wrapper {
   border-radius: 12px;
   overflow: hidden;

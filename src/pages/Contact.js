@@ -71,11 +71,14 @@ const Contact = () => {
             </div>
           </div>
           <h3 className="contact-map-title">Our Location</h3>
-          <div className="contact-map-wrapper">
-            <iframe loading="lazy"
-              src="https://maps.google.com/maps?q=Building%20%20No%20%2074%20%20-%20%20First%20District%20-%20Sheikh%20Zayed%20-%206th%20of%20October%20City%20-%20Egypt%20&#038;t=m&#038;z=15&#038;output=embed&#038;iwloc=near"
-              title="Building  No  74  -  First District - Sheikh Zayed - 6th of October City - Egypt "
-              aria-label="Building  No  74  -  First District - Sheikh Zayed - 6th of October City - Egypt "
+          <div className="map-container">
+            <iframe
+              title="Company Location"
+              src="https://www.google.com/maps/embed?pb=!1m12!1m8!1m3!1d13821.526308232187!2d30.95466!3d29.997198!3m2!1i1024!2i768!4f13.1!2m1!1sBuilding%20%20No%20%2074%20%20-%20%20First%20District%20-%20Sheikh%20Zayed%20-%206th%20of%20October%20City%20-%20Egypt!5e0!3m2!1sen!2sus!4v1771116197497!5m2!1sen!2sus"
+              style={{ width: '100%', height: '350px', border: '0', borderRadius: '8px' }}
+              loading="lazy"
+              allowFullScreen
+              referrerPolicy="no-referrer-when-downgrade"
             ></iframe>
           </div>
         </div>
